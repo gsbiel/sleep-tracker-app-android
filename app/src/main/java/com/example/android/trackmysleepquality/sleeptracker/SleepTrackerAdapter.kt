@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.trackmysleepquality.database.SleepNight
 import com.example.android.trackmysleepquality.databinding.ListItemSleepNightBinding
 
-class SleepTrackerAdapter : ListAdapter<SleepNight, SleepTrackerAdapter.ViewHolder>(SleepNightDiffCallback()) {
+class SleepTrackerAdapter(val clickListener: SleepNightListener  ) : ListAdapter<SleepNight, SleepTrackerAdapter.ViewHolder>(SleepNightDiffCallback()) {
 
 // Não preciso disso mais, pois estou usando ListAdapter
 //    var data = listOf<SleepNight>()
@@ -27,7 +27,7 @@ class SleepTrackerAdapter : ListAdapter<SleepNight, SleepTrackerAdapter.ViewHold
 
         // getItem é uma função do ListAdapter que nos permite acessar a lista de dados
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
 
     // parent é o RecyclerView.
@@ -37,8 +37,9 @@ class SleepTrackerAdapter : ListAdapter<SleepNight, SleepTrackerAdapter.ViewHold
 
     class ViewHolder private constructor(val binding: ListItemSleepNightBinding) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(item: SleepNight) {
+        fun bind(item: SleepNight, clickListener: SleepNightListener) {
             binding.sleep =  item
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 
@@ -60,5 +61,11 @@ class SleepNightDiffCallback: DiffUtil.ItemCallback<SleepNight>() {
         // SleepNight é um DataClass, logo, podemos usar o operador de igualdade para saber se dois objetos são iguais
         // Isto é, se ambos possuem propriedades com os mesmos valores.
         return oldItem == newItem
+    }
+}
+
+class SleepNightListener(val clickListener: (sleepId: Long) -> Unit){
+    fun onClick(night: SleepNight){
+        return clickListener(night.nightId)
     }
 }
