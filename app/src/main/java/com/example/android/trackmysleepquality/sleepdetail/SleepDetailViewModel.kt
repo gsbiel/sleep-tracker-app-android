@@ -59,12 +59,12 @@ class SleepDetailViewModel(
      * This is `private` because we don't want to expose the ability to set [MutableLiveData] to
      * the [Fragment]
      */
-    private val _navigateToSleepTracker = MutableLiveData<Boolean?>()
+    private val _navigateToSleepTracker = MutableLiveData<Boolean>()
 
     /**
      * When true immediately navigate back to the [SleepTrackerFragment]
      */
-    val navigateToSleepTracker: LiveData<Boolean?>
+    val navigateToSleepTracker: LiveData<Boolean>
         get() = _navigateToSleepTracker
 
     /**
@@ -82,11 +82,11 @@ class SleepDetailViewModel(
      * Call this immediately after navigating to [SleepTrackerFragment]
      */
     fun doneNavigating() {
-        _navigateToSleepTracker.value = null
+        _navigateToSleepTracker.postValue(false)
     }
 
     fun onClose() {
-        _navigateToSleepTracker.value = true
+        _navigateToSleepTracker.postValue(true)
     }
 
 }

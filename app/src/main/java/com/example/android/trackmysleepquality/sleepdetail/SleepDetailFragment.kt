@@ -17,6 +17,7 @@
 package com.example.android.trackmysleepquality.sleepdetail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +50,7 @@ class SleepDetailFragment : Fragment() {
                 inflater, R.layout.fragment_sleep_detail, container, false)
 
         val application = requireNotNull(this.activity).application
+
         val arguments = SleepDetailFragmentArgs.fromBundle(arguments!!)
 
         // Create an instance of the ViewModel Factory.
@@ -63,7 +65,6 @@ class SleepDetailFragment : Fragment() {
         // To use the View Model with data binding, you have to explicitly
         // give the binding object a reference to it.
         binding.sleepDetailViewModel = sleepDetailViewModel
-
         binding.setLifecycleOwner(this)
 
         // Add an Observer to the state variable for Navigating when a Quality icon is tapped.

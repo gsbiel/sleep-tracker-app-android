@@ -17,6 +17,7 @@
 package com.example.android.trackmysleepquality.sleeptracker
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,7 +63,7 @@ class SleepTrackerFragment : Fragment() {
         binding.sleepList.layoutManager = manager
 
         val adapter = SleepTrackerAdapter(SleepNightListener { nightId ->
-            Toast.makeText(context,"$nightId", Toast.LENGTH_LONG).show()
+//            Toast.makeText(context,"$nightId", Toast.LENGTH_LONG).show()
             sleepTrackerViewModel.onSleepNightClicked(nightId)
         })
 
@@ -93,13 +94,12 @@ class SleepTrackerFragment : Fragment() {
             }
         })
 
-//        sleepTrackerViewModel.navigateToSleepDataQuality.observe(this, Observer {night ->
-//            night?.let {
-//                this.findNavController().navigate(SleepTrackerFragmentDirections
-//                        .actionSleepTrackerFragmentToSleepDetailFragment(night))
-//                sleepTrackerViewModel.onSleepDataQualityNavigated()
-//            }
-//        })
+        sleepTrackerViewModel.navigateToSleepDataQuality.observe(this, Observer {night ->
+            night?.let {
+                this.findNavController()?.navigate(SleepTrackerFragmentDirections.actionSleepTrackerFragmentToSleepDetailFragment(night))
+                sleepTrackerViewModel.onSleepDataQualityNavigated()
+            }
+        })
 
         return binding.root
     }
