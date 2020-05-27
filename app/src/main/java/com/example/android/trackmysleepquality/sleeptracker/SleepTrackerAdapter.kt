@@ -13,14 +13,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-private val ITEM_VIEW_TYPE_HEADER = 0
-private val ITEM_VIEW_TYPE_ITEM = 1
-
 // Essa assinatura era usada quanod não havia header na lista
 //class SleepTrackerAdapter(val clickListener: SleepNightListener  ) : ListAdapter<SleepNight, SleepTrackerAdapter.ViewHolder>(SleepNightDiffCallback()) {
 class SleepTrackerAdapter(val clickListener: SleepNightListener): ListAdapter<DataItem, RecyclerView.ViewHolder>(SleepNightDiffCallback()) {
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
+
+    companion object {
+        private val ITEM_VIEW_TYPE_HEADER = 0
+        private val ITEM_VIEW_TYPE_ITEM = 1
+    }
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
